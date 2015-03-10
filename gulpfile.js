@@ -317,7 +317,7 @@ gulp.task("build-scripts", function(cb) {
         template: wrapper,
         defaultView: 'bootstrap'
     };
-    var jqueryui_warp = {
+    var jqueryui_wrap = {
         deps: [{
             "name": "jquery",
             "globalName": "jQuery",
@@ -394,7 +394,7 @@ gulp.task("build-scripts", function(cb) {
             // jqueryui
             gulp.src(paths.scripts.jqueryui)
                 .pipe(concat('alpaca.js'))
-                .pipe(wrap(jqueryui_warp))
+                .pipe(wrap(jqueryui_wrap))
                 .pipe(gulp.dest('build/alpaca/jqueryui'))
                 .pipe(concat('alpaca.min.js'))
                 .pipe(uglify())
@@ -554,36 +554,26 @@ gulp.task("update-site-alpaca", function(cb) {
 gulp.task('watch', function() {
 
     // scripts
-    watch(paths.scripts.core, function(files, cb) {
-        runSequence("build-scripts", "update-site-alpaca", function() {
-            cb();
-        });
+    watch(paths.scripts.core, function(event) {
+        runSequence("build-scripts", "update-site-alpaca");
     });
-    watch(paths.scripts.all_views, function(files, cb) {
-        runSequence("build-scripts", "update-site-alpaca", function() {
-            cb();
-        });
+    watch(paths.scripts.all_views, function(event) {
+        runSequence("build-scripts", "update-site-alpaca");
     });
 
     // templates
-    watch(paths.templates.all, function(files, cb) {
-        runSequence("build-templates", "build-scripts", "update-site-alpaca", function() {
-            cb();
-        });
+    watch(paths.templates.all, function(event) {
+        runSequence("build-templates", "build-scripts", "update-site-alpaca");
     });
 
     // styles
-    watch(paths.styles.all, function(files, cb) {
-        runSequence("build-styles", "update-site-alpaca", function() {
-            cb();
-        });
+    watch(paths.styles.all, function(event) {
+        runSequence("build-styles", "update-site-alpaca");
     });
 
     // web
-    watch(["site/*/**", "site/*", "site/*.*"], function(files, cb) {
-        runSequence("build-site", "update-site-full", function() {
-            cb();
-        });
+    watch(["site/*/**", "site/*", "site/*.*"], function(event) {
+        runSequence("build-site", "update-site-full");
     });
 });
 
