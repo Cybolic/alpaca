@@ -92,6 +92,11 @@
                             self.options.dateFormat = self.picker.format();
                         }
                     }
+                    else if ($.fn.datepicker)
+                    {
+
+                        self.getControlEl().datepicker(self.options.picker);
+                    }
                 }
 
                 callback();
