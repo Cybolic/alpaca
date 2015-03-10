@@ -1,6 +1,6 @@
 (function($) {
 
-    // NOTE: this requires bootstrap-datetimepicker.js
+    // NOTE: this requires bootstrap-datetimepicker.js or the jQueryUI datepicker
     // NOTE: this requires moment.js
 
     var Alpaca = $.alpaca;
@@ -244,11 +244,10 @@
             this.base();
 
             this.picker = null;
-        }
+        },
 
 
         /* builder_helpers */
-        ,
 
         /**
          * @see Alpaca.Fields.TextField#getTitle
@@ -310,8 +309,8 @@
                         "type": "string"
                     },
                     "picker": {
-                        "title": "DatetimePicker options",
-                        "description": "Options that are supported by the <a href='http://eonasdan.github.io/bootstrap-datetimepicker/'>Bootstrap DateTime Picker</a>.",
+                        "title": "DatetimePicker/Datepicker options",
+                        "description": "Options that are supported by the <a href='http://eonasdan.github.io/bootstrap-datetimepicker/'>Bootstrap DateTime Picker</a> or the <a href='http://api.jqueryui.com/datepicker/'>jQuery UI Datepicker</a>.",
                         "type": "any"
                     }
                 }
