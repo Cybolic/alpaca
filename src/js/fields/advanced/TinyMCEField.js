@@ -1,6 +1,7 @@
 (function($) {
 
     var Alpaca = $.alpaca;
+    var tinymce = window.tinymce || window.tinyMCE;
 
     Alpaca.Fields.TinyMCEField = Alpaca.Fields.TextAreaField.extend(
         /**
@@ -42,9 +43,8 @@
                 var returnVal = "";
 
                 //when page intially loads and tinyMCE not yet initialized, this check prevents an error
-                if (!rteRef)
-                {
-                    returnVal = rteRef.getContent()
+                if (rteRef != null) {
+                    returnVal = rteRef.getContent();
                 }
 
                 return returnVal;
@@ -60,12 +60,19 @@
                         if (!self.isDisplayOnly() && self.control) {
                             var rteFieldID = self.control[0].id;
 
-                            setTimeout(function () {
-                                tinyMCE.init({
-                                    selector: "#" + rteFieldID,
-                                    toolbar: self.options.toolbar
-                                });
-                            }, 250); //There may be a better/more proper way to wait to be able to call tinymce, but calling it in a setTimeout seems to be reliable
+                            var attemptCreation = function() {
+                                if (document.getElementById(rteFieldID) != null) {
+                                    tinymce.init({
+                                        selector: "#" + rteFieldID,
+                                        toolbar: self.options.toolbar
+                                    });
+                                } else {
+                                    setTimeout(attemptCreation, 250);
+                                }
+
+                            };
+
+                            attemptCreation();
                         }
                     }
 
